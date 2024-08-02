@@ -24,7 +24,7 @@ header {
         width: 100%;
         img{
             width: 25%;
-            min-width: 200px;
+            min-width: 200px;            
         }
     }
 </style>
