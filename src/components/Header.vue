@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="d-flex align-items-center">
     <h1>
         <img src="/public/img/nomads-logo.png" alt="">
     </h1>
@@ -15,6 +15,9 @@ export default {
 
 
 <style lang="scss" scoped>
+header {
+    height: 200px;
+}
     h1{
         text-align: center;
         display: block;
