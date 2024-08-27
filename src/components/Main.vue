@@ -2,7 +2,7 @@
   <section id="filter">
     <div class="d-flex justify-content-center align-items-center">
       <span>Where:</span>
-      <select name="travel" id="travel" class="form-select mx-3" v-model="selectedCountry" @change="updateMap">
+      <select name="travel" id="travel" class="form-select mx-3" v-model="selectedCountry" @change="applyFilters">
         <option value="Italia">Italia</option>
         <option value="All">Tutti i paesi</option>
         <option v-for="country in sortedCountries" :key="country" :value="country">
@@ -12,7 +12,7 @@
     </div>
     <div class="d-flex justify-content-center align-items-center mt-3">
       <span>When:</span>
-      <select name="year" id="year" class="form-select mx-3" v-model="selectedYear" @change="filterMarkersByYear">
+      <select name="year" id="year" class="form-select mx-3" v-model="selectedYear" @change="applyFilters">
         <option value="">Tutti gli anni</option>
         <option value="<1"> < 1 anno</option>
         <option value="<5"> < 5 anni fa</option>
@@ -78,20 +78,18 @@ export default {
     }
   },
   methods: {
-    updateMap() {
-      const mapComponent = this.$refs.mapComponent;
-      if (mapComponent) {
-        mapComponent.fitBoundsForCountry(this.selectedCountry);
-      }
+    applyFilters() {
+      // Prima filtro i marker
+      this.filterMarkers();
+      // Poi aggiorno la mappa con i marker filtrati
+      this.updateMap();
     },
-    filterMarkersByYear() {
+    filterMarkers() {
       const currentYear = new Date().getFullYear();
       let filtered = this.markers;
 
       if (this.selectedCountry !== 'All') {
-        filtered = filtered.filter(marker =>
-          marker.country === this.selectedCountry
-        );
+        filtered = filtered.filter(marker => marker.country === this.selectedCountry);
       }
 
       if (this.selectedYear === '<1') {
@@ -104,15 +102,19 @@ export default {
         filtered = filtered.filter(marker => marker.year && (currentYear - marker.year) > 10);
       }
 
-      // Aggiunto sempre Milano ai marker filtrati
+      // Aggiungo sempre Milano ai marker filtrati
       const milanoMarker = this.markers.find(marker => marker.title === 'Milano, Italia');
       if (milanoMarker) {
         filtered = [...filtered, milanoMarker];
       }
 
       this.filteredMarkers = filtered;
-
-      // Tolto updateMap qui, perchè crea un loop infinito
+    },
+    updateMap() {
+      const mapComponent = this.$refs.mapComponent;
+      if (mapComponent) {
+        mapComponent.fitBoundsForCountry(this.selectedCountry);
+      }
     },
     openModal(marker) {  
       this.selectedMarker = marker;
@@ -124,8 +126,7 @@ export default {
     }
   },
   mounted() {
-    this.filterMarkersByYear(); // Inizialmente filtra per anno
-    this.updateMap(); // Poi aggiorna la mappa
+    this.applyFilters(); // Applica i filtri inizialmente per impostare i marker e la mappa
   }
 };
 </script>
