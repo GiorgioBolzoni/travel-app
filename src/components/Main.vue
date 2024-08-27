@@ -54,6 +54,7 @@ export default {
         'Scozia',
         'Thailandia',
         'Canada',
+        'Danimarca',
         'USA',
         'Brasile',
         'Cuba',

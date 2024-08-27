@@ -188,7 +188,7 @@ export const markers = [
         position: [43.651070, -79.347015], 
         title: 'Toronto, Canada',
         country: 'Canada',
-        image: 'https://www.airtransat.com/getmedia/c561ff6f-e480-4b8c-8b27-361d2b1e5ad3/Toronto-downtown-skyline-1000x600.aspx?width=1000&height=600&ext=.jpg',
+        image: 'https://cdn.authentik.com/canada/images/section/images_list/5-toronto-by-night_5609.jpg',
         year: '2013',
     },
     { 
@@ -198,6 +198,30 @@ export const markers = [
         country: 'Maldive',
         image: 'https://images.lonelyplanetitalia.it/static/places/maldive-139.jpg?q=90&p=2400%7C1350%7Cmax&s=22143f847c5de9bc56585d24123d51cb',
         year: '2000',
+    },
+    { 
+        id: 26, 
+        position: [55.6761, 12.5683], 
+        title: 'Copenhagen',
+        country: 'Danimarca',
+        image: 'https://static.toiimg.com/photo/55832119.cms',
+        year: '2016',
+    },
+    { 
+        id: 27, 
+        position: [39.46975, -0.37739], 
+        title: 'Valencia',
+        country: 'Spagna',
+        image: 'https://img.nh-hotels.net/8yYbq/aGoV8/original/Valencia_CAC.jpg?output-quality=70&resize=*:*&background-color=white',
+        year: '2014',
+    },
+    { 
+        id: 28, 
+        position: [38.34517, -0.48149], 
+        title: 'Alicante',
+        country: 'Spagna',
+        image: 'https://www.thetimes.com/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2Fee791ff0-d38e-11e7-9825-214165100f73.jpg?crop=5693%2C3202%2C0%2C297&resize=1200',
+        year: '2014',
     }
 ];
 export const countryBounds = {

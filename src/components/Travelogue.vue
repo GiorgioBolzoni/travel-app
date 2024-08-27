@@ -1,6 +1,14 @@
 <template>
     <div>
+      <div class="date-picker-container">
+        <label for="start-date">Da:</label>
+        <datepicker v-model="startDate" placeholder="Seleziona data inizio" />
+        <label for="end-date">A:</label>
+        <datepicker v-model="endDate" placeholder="Seleziona data fine" />
+      </div>
+  
       <h3>Diario di viaggio</h3>
+      
       <div v-for="(entry, index) in entries" :key="index" class="entry">
         <h4>Giorno {{ index + 1 }}</h4>
         <div class="entry-content">
@@ -11,6 +19,7 @@
           <textarea v-model="entry.notes" @input="save" placeholder="Note della giornata"></textarea>
         </div>
       </div>
+      
       <div>
         <button @click="addEntry" class="mx-2 btn btn-primary">Aggiungi giorno</button>
         <button @click="save" class="mx-2 btn btn-success">Salva</button>
@@ -19,11 +28,18 @@
   </template>
   
   <script>
+  import Datepicker from 'vue3-datepicker';
+  
   export default {
+    components: {
+      Datepicker
+    },
     props: ['marker'],
     data() {
       return {
-        entries: []
+        entries: [], 
+        startDate: null, 
+        endDate: null 
       };
     },
     mounted() {
@@ -44,13 +60,21 @@
         reader.readAsDataURL(file);
       },
       save() {
-        localStorage.setItem(`entries_${this.marker.id}`, JSON.stringify(this.entries));
+        const dataToSave = {
+          entries: this.entries,
+          startDate: this.startDate,
+          endDate: this.endDate
+        };
+        localStorage.setItem(`entries_${this.marker.id}`, JSON.stringify(dataToSave));
         console.log('Dati salvati con successo!');
       },
       loadEntries() {
-        const storedEntries = localStorage.getItem(`entries_${this.marker.id}`);
-        if (storedEntries) {
-          this.entries = JSON.parse(storedEntries);
+        const storedData = localStorage.getItem(`entries_${this.marker.id}`);
+        if (storedData) {
+          const parsedData = JSON.parse(storedData);
+          this.entries = parsedData.entries || [];
+          this.startDate = parsedData.startDate ? new Date(parsedData.startDate) : null;
+          this.endDate = parsedData.endDate ? new Date(parsedData.endDate) : null;
         }
       }
     }
@@ -74,6 +98,13 @@
   
   textarea {
     flex-grow: 1;
+  }
+  
+  .date-picker-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
   }
   </style>
   
