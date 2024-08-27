@@ -2,7 +2,7 @@
     <div class="modal" v-if="show">
       <div class="modal-content">
         <span class="close" @click="close">&times;</span>
-        <h2>{{ marker.title }}</h2>
+        <h2 class="text-center">{{ marker.title }}</h2>
         <Travelogue :marker="marker" />
       </div>
     </div>
@@ -59,4 +59,3 @@
     cursor: pointer;
   }
   </style>
-  

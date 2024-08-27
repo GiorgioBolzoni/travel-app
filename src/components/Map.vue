@@ -74,6 +74,7 @@ export default {
 
         const button = document.createElement('button');
         button.textContent = 'Visualizza';
+        button.classList.add('btn', 'btn-danger');
         button.addEventListener('click', () => {
           this.$emit('openModal', marker);
         });

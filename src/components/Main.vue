@@ -33,14 +33,14 @@
 
 <script>
 import Map from './Map.vue';
-import Modal from './Modal.vue';  // Importa il componente Modal
+import Modal from './Modal.vue';  
 import { markers } from '../data/store.js';
 
 export default {
   name: 'Main',
   components: {
     Map,
-    Modal  // Registra il componente Modal
+    Modal 
   },
   data() {
     return {
@@ -68,7 +68,7 @@ export default {
         'Maldive',
         'Egitto'
       ],
-      isModalVisible: false,  // Stato della modale
+      isModalVisible: false,  
       selectedMarker: null  // Marker selezionato per la modale
     };
   },
@@ -79,7 +79,6 @@ export default {
   },
   methods: {
     updateMap() {
-      this.filterMarkersByYear(); // Applicato il filtro per l'anno
       const mapComponent = this.$refs.mapComponent;
       if (mapComponent) {
         mapComponent.fitBoundsForCountry(this.selectedCountry);
@@ -112,19 +111,21 @@ export default {
       }
 
       this.filteredMarkers = filtered;
-      this.updateMap(); // Aggiornamento la mappa con i marker filtrati
+
+      // Tolto updateMap qui, perchè crea un loop infinito
     },
-    openModal(marker) {  // Metodo per aprire la modale
+    openModal(marker) {  
       this.selectedMarker = marker;
       this.isModalVisible = true;
     },
-    closeModal() {  // Metodo per chiudere la modale
+    closeModal() {  
       this.isModalVisible = false;
       this.selectedMarker = null;
     }
   },
   mounted() {
-    this.updateMap(); // Inizialmente filtra per Italia e aggiorna la mappa
+    this.filterMarkersByYear(); // Inizialmente filtra per anno
+    this.updateMap(); // Poi aggiorna la mappa
   }
 };
 </script>
