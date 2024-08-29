@@ -1,6 +1,6 @@
 # Travel App
 
-## Il diario di viaggio delle tue vacanze estive
+## NOMADS: il diario di viaggio delle tue vacanze estive
 
 ### OBIETTIVO
 
@@ -70,4 +70,4 @@ Vai al sito: **[Leaflet](https://leafletjs.com/)**
 ---
 
 Vai all'app online!
-**[Travel App](https://leafletjs.com/)**
+**[NOMADS](https://nomads-travel-app.netlify.app/)**
