@@ -33,8 +33,9 @@ Sono previste nuove funzionalità, l'integrazione delle stesse avverrà con segu
 1. Possibilità di eliminare dalla lista un giorno di viaggio
 2. Possibilità di aggiungere, e visualizzare, un voto da 1 a 5 al viaggio
 3. Implementazione di alcune nuove categorie da poter valutare, come il punto precedente, quali: cibo, paesaggio, attività, svago, relax, etc.
+4. Possibilità di aggiungere nuovi viaggi da App
 5. Upgrade del layout
-4. TBD ...
+6. TBD ...
 ```
 
 ### Tecnologlie utilizzate
