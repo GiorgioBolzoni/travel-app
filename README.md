@@ -25,6 +25,11 @@ L'applicazione permette di:
 
 I dati inseriti verranno salvati in locale per poterli visualizzare in ogni momento.
 
+**_Alcuni dettagli:_**
+
+- Selezionando uno specifico Paese dall'elenco, la mappa effettuerà uno zoom, precedentemente impostato con i limiti geografici, sul quel Paese
+- Zoom in e zoom out hanno un limite impostato manualmente
+
 ---
 
 ### FUTURE INTEGRAZIONI
