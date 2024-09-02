@@ -1,23 +1,75 @@
 <template>
   <div>
-    <div class="date-picker-container my-2">
-      <label for="start-date">Da:</label>
-      <datepicker v-model="startDate" placeholder="Seleziona data inizio" />
-      <label for="end-date">A:</label>
-      <datepicker v-model="endDate" placeholder="Seleziona data fine" />
+    <!-- Sezione Datepicker -->
+    <div class="date-picker-container my-2 row justify-content-center">
+      <div class="d-flex flex-column align-items-center gap-2 col-12 col-md-6">
+        <label for="date" class=" fw-bold fs-5 text-danger">Quando</label>
+        <VueDatePicker v-model="dateRange" range :multi-calendars="true" placeholder="Seleziona date" />
+      </div>
     </div>
     
-    <div class="my-3">
-      <label for="rating">Valutazione del viaggio:</label>
-      <vue3-star-ratings 
-        v-model="rating"
-        :starSize="32"
-        starColor="#ff9800"
-        inactiveColor="#333333"
-        :numberOfStars="5"
-        :disableClick="false" 
-        @rating-selected="save" />
+    <!-- Sezione per le valutazioni -->
+    <div class="row justify-content-center fw-bold">
+      <div class="starRating col-12 col-sm-6 col-md-4 col-lg-2">
+        <label for="travelRating">Overall:</label>
+        <vue3-star-ratings 
+          v-model="travelRating"
+          :starSize="16"
+          starColor="#ff9800"
+          inactiveColor="#333333"
+          :numberOfStars="5"
+          :disableClick="false" 
+          @rating-selected="save" 
+        />
+      </div>
+      <div class="starRating col-12 col-sm-6 col-md-4 col-lg-2">
+        <label for="foodRating">Cibo:</label>
+        <vue3-star-ratings 
+          v-model="foodRating"
+          :starSize="16"
+          starColor="#ff9800"
+          inactiveColor="#333333"
+          :numberOfStars="5"
+          :disableClick="false" 
+          @rating-selected="save" 
+        />
+      </div>
+      <div class="starRating col-12 col-sm-6 col-md-4 col-lg-2">
+        <label for="sceneryRating">Paesaggio:</label>
+        <vue3-star-ratings 
+          v-model="sceneryRating"
+          :starSize="16"
+          starColor="#ff9800"
+          inactiveColor="#333333"
+          :numberOfStars="5"
+          :disableClick="false" 
+        />
+      </div>
+      <div class="starRating col-12 col-sm-6 col-md-4 col-lg-2">
+        <label for="activitiesRating">Attività:</label>
+        <vue3-star-ratings 
+          v-model="activitiesRating"
+          :starSize="16"
+          starColor="#ff9800"
+          inactiveColor="#333333"
+          :numberOfStars="5"
+          :disableClick="false" 
+        />
+      </div>
+      <div class="starRating col-12 col-sm-6 col-md-4 col-lg-2">
+        <label for="priceRating">Prezzi:</label>
+        <vue3-star-ratings 
+          v-model="priceRating"
+          :starSize="16"
+          starColor="#ff9800"
+          inactiveColor="#333333"
+          :numberOfStars="5"
+          :disableClick="false" 
+        />
+      </div>
     </div>
+
+    <!-- Sezione note di viaggio -->
 
     <h3>Diario di viaggio</h3>
     
@@ -45,37 +97,39 @@
 </template>
 
 <script>
-import Datepicker from 'vue3-datepicker';
+import { ref, onMounted } from 'vue';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
 import Vue3StarRatings from 'vue3-star-ratings';
 
 export default {
   components: {
-    Datepicker,
-    Vue3StarRatings
+    VueDatePicker,
+    Vue3StarRatings,
   },
-  props: ['marker'],
+  props: ['marker'], // Usato per identificare univocamente il viaggio
   data() {
     return {
-      entries: [], 
-      startDate: null, 
-      endDate: null,
-      rating: 0 
+      dateRange: [],          // Per memorizzare l'intervallo di date selezionato
+      travelRating: 0,        
+      foodRating: 0,          
+      sceneryRating: 0,       
+      priceRating: 0,         
+      activitiesRating: 0,    
+      entries: [],            // Per memorizzare le voci del diario
     };
-  },
-  mounted() {
-    this.loadEntries();
   },
   methods: {
     addEntry() {
       this.entries.push({ photo: '', notes: '' });
-      this.save(); 
+      this.save();
     },
     updatePhoto(event, index) {
       const file = event.target.files[0];
       const reader = new FileReader();
       reader.onload = (e) => {
         this.entries[index].photo = e.target.result;
-        this.save(); 
+        this.save();
       };
       reader.readAsDataURL(file);
     },
@@ -84,28 +138,43 @@ export default {
       this.save();
     },
     save() {
+      // Usa l'id del viaggio come chiave per salvare i dati
       const dataToSave = {
         entries: this.entries,
-        startDate: this.startDate,
-        endDate: this.endDate,
-        rating: this.rating 
+        startDate: this.dateRange[0],
+        endDate: this.dateRange[1],
+        travelRating: this.travelRating,
+        foodRating: this.foodRating,
+        sceneryRating: this.sceneryRating,
+        priceRating: this.priceRating,
+        activitiesRating: this.activitiesRating,
       };
-      localStorage.setItem(`entries_${this.marker.id}`, JSON.stringify(dataToSave));
-      console.log('Dati salvati con successo!');
+      localStorage.setItem(`travel_data_${this.marker.id}`, JSON.stringify(dataToSave));
+      console.log('Dati salvati con successo per il viaggio ID:', this.marker.id);
     },
     loadEntries() {
-      const storedData = localStorage.getItem(`entries_${this.marker.id}`);
+      // Carica i dati in base all'id del viaggio
+      const storedData = localStorage.getItem(`travel_data_${this.marker.id}`);
       if (storedData) {
         const parsedData = JSON.parse(storedData);
         this.entries = parsedData.entries || [];
-        this.startDate = parsedData.startDate ? new Date(parsedData.startDate) : null;
-        this.endDate = parsedData.endDate ? new Date(parsedData.endDate) : null;
-        this.rating = parsedData.rating || 0; 
+        this.dateRange = [new Date(parsedData.startDate), new Date(parsedData.endDate)];
+        this.travelRating = parsedData.travelRating || 0;
+        this.foodRating = parsedData.foodRating || 0;
+        this.sceneryRating = parsedData.sceneryRating || 0;
+        this.priceRating = parsedData.priceRating || 0;
+        this.activitiesRating = parsedData.activitiesRating || 0;
       }
     }
+  },
+  mounted() {
+    this.loadEntries();
   }
 };
 </script>
+
+
+
 
 <style scoped>
 .entry {
@@ -131,5 +200,13 @@ textarea {
   align-items: center;
   gap: 10px;
   margin-bottom: 20px;
+}
+
+.starRating{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

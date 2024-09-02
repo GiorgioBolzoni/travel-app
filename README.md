@@ -22,6 +22,7 @@ L'applicazione permette di:
   - aggiungere nuovi giorni al viaggio
   - annotare giorno per giorno le diverse esperienze
   - inserire foto per ogni giorno del viaggio
+  - aggiungere, e visualizzare, un voto da 1 a 5 relativo al viaggio in generale, ma anche ad alcuni aspetti come: cibo, paesaggio, attività, svago, relax, etc.
 
 I dati inseriti verranno salvati in locale per poterli visualizzare in ogni momento.
 
@@ -29,6 +30,7 @@ I dati inseriti verranno salvati in locale per poterli visualizzare in ogni mome
 
 - Selezionando uno specifico Paese dall'elenco, la mappa effettuerà uno zoom, precedentemente impostato con i limiti geografici, sul quel Paese
 - Zoom in e zoom out hanno un limite impostato manualmente
+- Possibilità di eliminare dalla lista un giorno di viaggio
 
 ---
 
@@ -36,12 +38,9 @@ I dati inseriti verranno salvati in locale per poterli visualizzare in ogni mome
 
 Sono previste nuove funzionalità, l'integrazione delle stesse avverrà con seguente ordine
 
-1. Possibilità di eliminare dalla lista un giorno di viaggio **_[NB: Funzionalità aggiunta il 30/08/2024]_**
-2. Possibilità di aggiungere, e visualizzare, un voto da 1 a 5 al viaggio
-3. Implementazione di alcune nuove categorie da poter valutare, come il punto precedente, quali: cibo, paesaggio, attività, svago, relax, etc.
-4. Possibilità di aggiungere nuovi viaggi da App
-5. Upgrade del layout
-6. TBD ...
+1. Possibilità di aggiungere nuovi viaggi da App
+2. Upgrade del layout
+3. TBD ...
 
 ---
 
