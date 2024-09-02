@@ -6,6 +6,18 @@
       <label for="end-date">A:</label>
       <datepicker v-model="endDate" placeholder="Seleziona data fine" />
     </div>
+    
+    <div class="my-3">
+      <label for="rating">Valutazione del viaggio:</label>
+      <vue3-star-ratings 
+        v-model="rating"
+        :starSize="32"
+        starColor="#ff9800"
+        inactiveColor="#333333"
+        :numberOfStars="5"
+        :disableClick="false" 
+        @rating-selected="save" />
+    </div>
 
     <h3>Diario di viaggio</h3>
     
@@ -34,17 +46,20 @@
 
 <script>
 import Datepicker from 'vue3-datepicker';
+import Vue3StarRatings from 'vue3-star-ratings';
 
 export default {
   components: {
-    Datepicker
+    Datepicker,
+    Vue3StarRatings
   },
   props: ['marker'],
   data() {
     return {
       entries: [], 
       startDate: null, 
-      endDate: null 
+      endDate: null,
+      rating: 0 
     };
   },
   mounted() {
@@ -65,21 +80,15 @@ export default {
       reader.readAsDataURL(file);
     },
     deleteDay(index) {
-      if (index === this.entries.length - 1) {
-        
-        this.entries.splice(index, 1);
-      } else {
-        
-        this.entries[index].photo = '';
-        this.entries[index].notes = '';
-      }
+      this.entries.splice(index, 1);
       this.save();
     },
     save() {
       const dataToSave = {
         entries: this.entries,
         startDate: this.startDate,
-        endDate: this.endDate
+        endDate: this.endDate,
+        rating: this.rating 
       };
       localStorage.setItem(`entries_${this.marker.id}`, JSON.stringify(dataToSave));
       console.log('Dati salvati con successo!');
@@ -91,6 +100,7 @@ export default {
         this.entries = parsedData.entries || [];
         this.startDate = parsedData.startDate ? new Date(parsedData.startDate) : null;
         this.endDate = parsedData.endDate ? new Date(parsedData.endDate) : null;
+        this.rating = parsedData.rating || 0; 
       }
     }
   }
