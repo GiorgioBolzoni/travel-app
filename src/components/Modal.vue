@@ -2,7 +2,7 @@
     <div class="modal" v-if="show">
       <div class="modal-content">
         <span class="close" @click="close">&times;</span>
-        <h2 class="text-center">{{ marker.title }}</h2>
+        <h2 class="text-center mark-title">{{ marker.title }}</h2>
         <Travelogue :marker="marker" />
       </div>
     </div>
@@ -36,7 +36,11 @@
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
   }
-  
+  .mark-title{
+    font-weight: bolder;
+    color: #db4205c2;
+    font-size: 2.5em;
+  }
   .modal-content {
     background-color: #fefefe;
     margin: 15% auto;

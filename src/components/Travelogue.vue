@@ -2,8 +2,8 @@
   <div>
     <!-- Sezione Datepicker -->
     <div class="date-picker-container my-2 row justify-content-center">
-      <div class="d-flex flex-column align-items-center gap-2 col-12 col-md-6">
-        <label for="date" class=" fw-bold fs-5 text-danger">Quando</label>
+      <div class="d-flex flex-column align-items-center gap-2 col-12 col-md-6 calendar">
+        <label for="date" class=" fw-bold fs-5">Quando</label>
         <VueDatePicker v-model="dateRange" range :multi-calendars="true" placeholder="Seleziona date" />
       </div>
     </div>
@@ -71,29 +71,31 @@
 
     <!-- Sezione note di viaggio -->
 
-    <h3>Diario di viaggio</h3>
+    <div class="my-2 blog p-3 rounded-3">
+      <h3 class="my-2 text-center fw-bold">Diario di viaggio</h3>
     
-    <div v-for="(entry, index) in entries" :key="index" class="entry">
-      <h4>
-        Giorno {{ index + 1 }}
-        <button @click="deleteDay(index)" class="btn btn-danger" style="width: min-content; height: min-content; align-self: center;">
-          Delete
-        </button>
-      </h4>
-      <div class="entry-content row">
-        <div class="photo my-3 col-12 col-lg-5">
-          <img :src="entry.photo" alt="Foto del giorno">
-          <input type="file" @change="updatePhoto($event, index)" class="m-2 text-wrap" />
+        <div v-for="(entry, index) in entries" :key="index" class="entry d-flex flex-column my-2 p-3 rounded-3">
+          <h4>
+            Giorno {{ index + 1 }}
+            <button @click="deleteDay(index)" class="btn btn-danger" style="width: min-content; height: min-content; align-self: center;">
+              Delete
+            </button>
+          </h4>
+          <div class="entry-content row p-2">
+            <div class="photo my-3 col-12 col-lg-5">
+              <img :src="entry.photo" alt="Foto del giorno">
+              <input type="file" @change="updatePhoto($event, index)" class="m-2 text-wrap" />
+            </div>
+            <textarea v-model="entry.notes" @input="save" placeholder="Note della giornata" class="rounded-2 col-12 col-lg-5"></textarea>
+          </div>
         </div>
-        <textarea v-model="entry.notes" @input="save" placeholder="Note della giornata" class="rounded-2 col-12 col-lg-5"></textarea>
+        
+        <div class="text-center mt-4 ">
+          <button @click="addEntry" class="m-2 btn btn-primary">Aggiungi giorno</button>
+          <button @click="save" class="m-2 btn btn-success">Salva</button>
+        </div>
       </div>
     </div>
-    
-    <div>
-      <button @click="addEntry" class="mx-2 btn btn-primary">Aggiungi giorno</button>
-      <button @click="save" class="mx-2 btn btn-success">Salva</button>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -177,10 +179,19 @@ export default {
 
 
 <style scoped>
-.entry {
-  margin-top: 20px;
+.calendar{
+  max-width: 370px;
 }
-
+.blog {
+  background-color: #db4205c2;
+}
+.btn{
+  box-shadow: 3px 3px 5px #000000;
+}
+.entry{
+  background-color: #212529;
+  color: white;
+}
 .entry-content {
   display: flex;
   gap: 20px;
