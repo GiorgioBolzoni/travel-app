@@ -136,7 +136,12 @@ export default {
       reader.readAsDataURL(file);
     },
     deleteDay(index) {
-      this.entries.splice(index, 1);
+      if (index === this.entries.length - 1) {
+        this.entries.splice(index, 1);
+      } else {
+        this.entries[index].photo = '';
+        this.entries[index].notes = '';
+      }
       this.save();
     },
     save() {
